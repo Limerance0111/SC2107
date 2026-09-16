@@ -54,6 +54,17 @@
 Convert:   .asmfunc
 
 ; Write this as part of Lab1
+    LDR  R1, IRMax
+    CMP  R0, R1
+    BGE  NoCap
+    MOV  R0, R1      ; Cap R0 at IRMax
+NoCap:
+    LDR  R1, IROffset
+    ADD  R0, R0, R1  ; R0 = n + IROffset
+    LDR  R1, IRSlope
+    SDIV R0, R1, R0  ; R0 = IRSlope / (n + IROffset)
+    BX   LR
+
 
       .endasmfunc
       .align 4
