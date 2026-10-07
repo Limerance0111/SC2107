@@ -74,17 +74,15 @@ typedef const struct State State_t;
 #define Right     &fsm[2]
 
 State_t fsm[3]={
-  // State: Center. Output: 0x03 (1,1). Delay: 500ms.
-  // Next State Input: {00, 01, 10, 11}
-  {0x03, 500, { Right, Left,   Right,  Center }},  // Center
-
-  // State: Left. Output: 0x02 (1,0). Delay: 500ms.
-  // Next State Input: {00, 01, 10, 11}
-  {0x02, 500, { Left,  Center, Center, Center }},  // Left
-
-  // State: Right. Output: 0x01 (0,1). Delay: 500ms.
-  // Next State Input: {00, 01, 10, 11}
-  {0x01, 500, { Right, Center, Center, Center }}   // Right
+  // Center: Output (1,1) -> 0x03, 500ms delay
+  // Inputs: 00->Right, 01->Left, 10->Right (fixed), 11->Center
+  {0x03, 500, { Right, Left,   Right,  Center }},
+  // Left: Output (1,0) -> 0x02, 500ms delay
+  // Inputs: 00->Left, 01->Center, 10->Right, 11->Center
+  {0x02, 500, { Left,  Center, Right,  Center }},
+  // Right: Output (0,1) -> 0x01, 500ms delay
+  // Inputs: 00->Right, 01->Left, 10->Center, 11->Center
+  {0x01, 500, { Right, Left,   Center, Center }}
 };
 
 State_t *Spt;  // pointer to the current state
